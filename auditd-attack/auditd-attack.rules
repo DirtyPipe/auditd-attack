@@ -64,7 +64,7 @@
 -a never,exit -F arch=b64 -S adjtimex -F auid=unset -F uid=chrony -F subj_type=chronyd_t
 
 ## This is not very interesting and wastes a lot of space if the server is public facing
--a always,exclude -F msgtype=CRYPTO_KEY_USER
+#-a always,exclude -F msgtype=CRYPTO_KEY_USER
 
 ## VMWare tools (Comment out lines 75 and 76 if they are not needed)
 -a exit,never -F arch=b32 -S fork -F success=0 -F path=/usr/lib/vmware-tools -F subj_type=initrc_t -F exit=-2
@@ -408,7 +408,7 @@
 -a always,exit -F arch=b64 -S ptrace -F a0=0x5 -k T1055.008_6
 -a always,exit -F arch=b32 -S ptrace -F a0=0x6 -k T1055.008_7
 -a always,exit -F arch=b64 -S ptrace -F a0=0x6 -k T1055.008_8
--w /etc/ld.so.preload -k T1548.001_33
+-w /etc/ld.so.preload -p w -k T1548.001_33
 
 ## Shell configuration Persistence Related Events
 -a exit,always -F dir=/etc/profile.d -F perm=w -k T1546.004_1
@@ -432,3 +432,8 @@
 
 # Make the configuration immutable --------------------------------------------
 ##-e 2
+
+#kubectl审计规则
+-w /etc/bin/kubectl -p x -k kubectl_run
+-w /etc/bin/kubeadm -p x -k kubeadm_run
+-w /etc/bin/kubelet -p x -k kubelet_run
