@@ -145,8 +145,9 @@
 -w /usr/sbin/realm -p x -k T1136.002_2
 
 ## Privleged Command Execution Related Events
--a exit,always -F arch=b64 -F euid=0 -F auid!=4294967295 -S execve -k T1078.003_9
--a exit,always -F arch=b32 -F euid=0 -F auid!=4294967295 -S execve -k T1078.003_10
+#该规则会产生大量日志
+#-a exit,always -F arch=b64 -F euid=0 -F auid!=4294967295 -S execve -k T1078.003_9
+#-a exit,always -F arch=b32 -F euid=0 -F auid!=4294967295 -S execve -k T1078.003_10
 -a always,exit -F path=/usr/sbin/userdel -F perm=x -F "auid>=500" -F auid!=4294967295 -k T1078.003_11
 -a always,exit -F path=/bin/ping -F perm=x -F "auid>=500" -F auid!=4294967295 -k T1078.003_12
 -a always,exit -F path=/bin/umount -F perm=x -F "auid>=500" -F auid!=4294967295 -k T1078.003_13
